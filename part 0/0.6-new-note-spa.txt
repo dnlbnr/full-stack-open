@@ -1,0 +1,17 @@
+title 0.6 New Note SPA
+
+note over browser:
+On form submit, the browser executes the event handler 
+which adds the new note to the notes array,
+redraws the note list based on the updated notes array
+and sends the data from the new note to the server
+end note
+
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+
+note over server:
+Server creates a new note with  
+data in request body
+end note
+
+server-->browser: {message: 'note created'}
