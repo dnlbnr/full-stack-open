@@ -10,8 +10,8 @@ end note
 browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
 
 note over server:
-Server creates a new note with  
-data in request body
+Server creates a new note 
+from data in request body
 end note
 
 server-->browser: {message: 'note created'}

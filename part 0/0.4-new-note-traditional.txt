@@ -3,8 +3,8 @@ title 0.4 New Note Traditional
 browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note
 
 note over server:
-Server creates a new note with  
-data in request body
+Server creates a new note  
+from data in request body
 end note
 
 server-->browser: HTTP status 302 Location: /exampleapp/notes
