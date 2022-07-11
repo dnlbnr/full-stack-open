@@ -1,0 +1,26 @@
+title 0.5 Notes SPA
+
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/spa
+server-->browser: HTML code
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
+server-->browser: main.css
+browser->server: https://studies.cs.helsinki.fi/exampleapp/spa.js
+server-->browser: spa.js
+
+note over browser:
+Browser starts executing the js code 
+which requests data.json from the server
+end note
+
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
+server-->browser: [{content: 'Note 1', date: '2022-07-11'}, ...]
+
+note over browser:
+Browser executes the event handler
+which adds the notes from data.json
+to the notes array and redraws
+the note list based on the updated notes array
+end note
+
+browser->server: HTTP GET https://studies.cs.helsinki.fi/favicon.ico
+server-->browser: favicon.ico
