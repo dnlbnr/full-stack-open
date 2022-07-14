@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Notification from './components/Notification';
 import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
@@ -8,6 +9,8 @@ const App = () => {
   const [persons, setPersons] = useState([]);
   const [newPerson, setNewPerson] = useState({ name: '', number: '' });
   const [filter, setFilter] = useState('');
+  const [successAlert, setSuccessAlert] = useState();
+  const [errorAlert, setErrorAlert] = useState();
 
   useEffect(() => {
     personService
@@ -19,19 +22,35 @@ const App = () => {
     setFilter(event.target.value);
   };
 
+  const showSuccess = (message) => {
+    setSuccessAlert(message);
+    setTimeout(() => setSuccessAlert(null), 5000);
+  };
+
+  const showError = (message) => {
+    setErrorAlert(message);
+    setTimeout(() => setErrorAlert(null), 5000);
+  };
+
   const updatePerson = () => {
     const id = persons.find((el) => el.name === newPerson.name).id;
     personService
       .update(id, newPerson)
-      .then((updatedPerson) =>
+      .then((updatedPerson) => {
         setPersons(
           persons.map((currentPerson) =>
             currentPerson.id === updatedPerson.id
               ? updatedPerson
               : currentPerson
           )
-        )
-      );
+        );
+        showSuccess(`${newPerson.name} updated successfully`);
+      })
+      .catch((error) => {
+        console.log(error);
+        showError(`${newPerson.name} is not in the phonebook anymore`);
+        setPersons(persons.filter((el) => el.name !== newPerson.name));
+      });
   };
 
   const addPerson = (event) => {
@@ -50,10 +69,13 @@ const App = () => {
       .then((person) => {
         setPersons([...persons, person]);
         setNewPerson({ name: '', number: '' });
+        showSuccess(`${person.name} added successfully`);
       })
       .catch((error) => {
         console.log(error);
-        alert('Error while adding person to the phone book. Please try again.');
+        showError(
+          'Error while adding person to the phone book. Please try again.'
+        );
       });
   };
 
@@ -61,11 +83,17 @@ const App = () => {
     if (window.confirm(`Delete ${person.name}?`)) {
       personService
         .remove(person.id)
-        .then(() =>
+        .then(() => {
           setPersons(
             persons.filter((existingPerson) => existingPerson.id !== person.id)
-          )
-        );
+          );
+          showSuccess(`${person.name} deleted successfully`);
+        })
+        .catch((error) => {
+          console.log(error);
+          showError(`${person.name} was already deleted`);
+          setPersons(persons.filter((el) => el.name !== person.name));
+        });
     }
   };
 
@@ -79,6 +107,8 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      {successAlert && <Notification success message={successAlert} />}
+      {errorAlert && <Notification error message={errorAlert} />}
       <Filter filter={filter} updateFilter={updateFilter} />
       <h3>add a new</h3>
       <PersonForm
