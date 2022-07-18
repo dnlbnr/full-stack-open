@@ -9,13 +9,11 @@ const App = () => {
   const [persons, setPersons] = useState([]);
   const [newPerson, setNewPerson] = useState({ name: '', number: '' });
   const [filter, setFilter] = useState('');
-  const [successAlert, setSuccessAlert] = useState();
-  const [errorAlert, setErrorAlert] = useState();
+  const [successAlert, setSuccessAlert] = useState('');
+  const [errorAlert, setErrorAlert] = useState('');
 
   useEffect(() => {
-    personService
-      .getAll('http://localhost:3001/persons')
-      .then((persons) => setPersons(persons));
+    personService.getAll().then((persons) => setPersons(persons));
   }, []);
 
   const updateFilter = (event) => {
@@ -28,6 +26,7 @@ const App = () => {
   };
 
   const showError = (message) => {
+    console.log('In showError');
     setErrorAlert(message);
     setTimeout(() => setErrorAlert(null), 5000);
   };
@@ -73,9 +72,7 @@ const App = () => {
       })
       .catch((error) => {
         console.log(error);
-        showError(
-          'Error while adding person to the phone book. Please try again.'
-        );
+        showError(error.response.data.message);
       });
   };
 
