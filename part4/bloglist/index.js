@@ -1,11 +1,17 @@
-const mongoose = require('mongoose')
-const { MONGODB_URI, PORT } = require('./utils/config')
+const { PORT } = require('./utils/config')
+const { connectDb } = require('./utils/db')
 const logger = require('./utils/logger')
 const app = require('./app')
 
-mongoose.connect(MONGODB_URI)
-  .then(() => logger.info('Connected to database'))
-  .catch(() => logger.error('Error while connecting to database'))
+// app.listen(PORT, () => logger.info(`Server is running on port ${PORT}`))
 
-const server = app
-server.listen(PORT, () => logger.info(`Server is running on port ${PORT}`))
+const setup = async () => {
+  try {
+    await connectDb()
+    app.listen(PORT, () => logger.info(`Server is running on port ${PORT}`))
+  } catch (error) {
+    logger.error(error)
+  }
+}
+
+setup()
