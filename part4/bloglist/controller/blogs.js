@@ -47,7 +47,8 @@ router.put('/:id', async (request, response) => {
   const userId = request.user.id
   const id = request.params.id
   const blog = await Blog.findById(id)
-  const data = request.body
+  const { author, likes, title, url } = request.body
+  const data = { author, likes, title, url }
 
   if (!userId) {
     return response.status(401).end()

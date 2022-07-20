@@ -6,8 +6,11 @@ const User = require('../models/user')
 router.post('/', async (request, response) => {
   const { username, password } = request.body
   const user = await User.findOne({ username })
+  if (!user) {
+    return response.status(401).json({ message: 'Invalid combination of username and password' })
+  }
   const pwCorrect = await bcrypt.compare(password, user.passwordHash)
-  if (!(user && pwCorrect)) {
+  if (!pwCorrect) {
     return response.status(401).json({ message: 'Invalid combination of username and password' })
   }
   const tokenPayload = { id: user._id, username: user.username }
