@@ -20,6 +20,11 @@ const create = async (values) => {
   return created;
 };
 
+const remove = async ({ id }) => {
+  const { data: result } = await axios.delete(`${baseUrl}/${id}`, { headers: { Authorization: authHeader } });
+  return result;
+};
+
 const like = async ({ id, ...blog }) => {
   const likedBlog = { ...blog, likes: blog.likes + 1 };
   const { data } = await axios.put(`${baseUrl}/${id}`, likedBlog, { headers: { Authorization: authHeader } });
@@ -27,5 +32,5 @@ const like = async ({ id, ...blog }) => {
 };
 
 export {
-  getAll, setAuthHeader, create, like,
+  getAll, setAuthHeader, create, like, remove,
 };

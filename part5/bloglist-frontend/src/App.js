@@ -3,7 +3,7 @@ import BlogList from './components/BlogList';
 import LoginForm from './components/LoginForm';
 import login from './services/login';
 import {
-  setAuthHeader, create, getAll, like,
+  setAuthHeader, create, getAll, like, remove,
 } from './services/blogs';
 import NewBlog from './components/NewBlog';
 import Notification from './components/Notification';
@@ -47,7 +47,8 @@ function App() {
   useEffect(() => {
     const getBlogs = async () => {
       const blogsFromBackend = await getAll();
-      setBlogs(blogsFromBackend);
+      const sortedByLikes = blogsFromBackend.sort((a, b) => a.likes < b.likes);
+      setBlogs(sortedByLikes);
     };
     try {
       getBlogs();
@@ -73,25 +74,34 @@ function App() {
     setUser(null);
   };
 
-  const createNewBlog = async (values) => {
+  const handleCreateBlog = async (values) => {
     try {
       const newBlog = await create(values);
       setBlogs([...blogs, newBlog]);
-      console.log('Before visibility toggle');
       collapisbleForm.current.toggleVisible();
-      console.log('After visibility toggle');
       showNotification.success('Blog created successfully');
     } catch (error) {
       showNotification.error('Something went wrong while creating the blog');
     }
   };
 
-  const likeBlog = async (toBeLiked) => {
+  const handleLikeBlog = async (toBeLiked) => {
     try {
       const likedBlog = await like(toBeLiked);
       setBlogs(blogs.map((blog) => (blog.id === likedBlog.id ? likedBlog : blog)));
     } catch (error) {
       showError('Something went wrong while liking the blog');
+    }
+  };
+
+  const handleDeleteBlog = async (toBeDeleted) => {
+    if (window.confirm(`Do you really want to delete ${toBeDeleted.title}?`)) {
+      try {
+        await remove(toBeDeleted);
+        setBlogs(blogs.filter((blog) => blog.id !== toBeDeleted.id));
+      } catch (error) {
+        showError('Something went wrong while deleting the blog');
+      }
     }
   };
 
@@ -113,13 +123,14 @@ function App() {
               <button type="button" onClick={handleLogout}>Logout</button>
             </p>
             <Collapsible ref={collapisbleForm} text="New Blog">
-              <NewBlog createNewBlog={createNewBlog} showNotification={showNotification} />
+              <NewBlog createNewBlog={handleCreateBlog} showNotification={showNotification} />
             </Collapsible>
             <BlogList
               blogs={blogs}
               user={user}
               showNotification={showNotification}
-              likeBlog={likeBlog}
+              likeBlog={handleLikeBlog}
+              deleteBlog={handleDeleteBlog}
             />
           </div>
         )}

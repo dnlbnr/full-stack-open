@@ -1,6 +1,7 @@
 import { useState } from 'react';
+import { blogType, likeBlogType, deleteBlogType } from '../utils/propTypes';
 
-function Blog({ blog, likeBlog }) {
+function Blog({ blog, likeBlog, deleteBlog }) {
   const [detailsVisible, setDetailsVisible] = useState(false);
   const [liked, setLiked] = useState(false);
 
@@ -19,6 +20,10 @@ function Blog({ blog, likeBlog }) {
     await likeBlog(blog);
   };
 
+  const handleDelete = () => {
+    deleteBlog(blog);
+  };
+
   return (
     <div style={blogStyle}>
       {blog.title}
@@ -34,10 +39,18 @@ function Blog({ blog, likeBlog }) {
         {blog.likes}
         {' '}
         {!liked && <button type="button" onClick={handleLike}>{liked ? 'Unlike' : 'Like'}</button>}
+        <br />
+        <button type="button" onClick={handleDelete}>Delete Blog</button>
       </div>
       )}
     </div>
   );
 }
+
+Blog.propTypes = {
+  blog: blogType.isRequired,
+  likeBlog: likeBlogType.isRequired,
+  deleteBlog: deleteBlogType.isRequired,
+};
 
 export default Blog;
