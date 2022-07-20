@@ -1,3 +1,6 @@
+const jwt = require('jsonwebtoken')
+const User = require('../models/user')
+
 const initialBlogs = [
   {
     title: 'React patterns',
@@ -37,4 +40,26 @@ const initialBlogs = [
   }
 ]
 
-module.exports = { initialBlogs }
+const oneBlog = [initialBlogs[0]]
+
+const initialUser = { username: 'TestUser', passwordHash: '123', name: 'Max' }
+
+const getNewBlog = async () => {
+  const { id } = await User.findOne({ username: initialUser.username })
+  const newBlog = {
+    title: 'New Blog Post',
+    author: 'Max Mustermann',
+    url: 'http://www.test.de',
+    likes: 5,
+    user: id
+  }
+  return newBlog
+}
+
+const getAuthHeader = async () => {
+  const { id, username } = await User.findOne({ username: initialUser.username })
+  const token = jwt.sign({ id, username }, process.env.TOKEN_SECRET)
+  return `Bearer ${token}`
+}
+
+module.exports = { initialBlogs, oneBlog, initialUser, getAuthHeader, getNewBlog }

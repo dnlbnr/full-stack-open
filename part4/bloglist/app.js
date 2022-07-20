@@ -4,18 +4,21 @@ const cors = require('cors')
 const morgan = require('morgan')
 const blogRouter = require('./controller/blogs')
 const userRouter = require('./controller/users')
-const { unknownEndpoint, errorHandler } = require('./utils/middleware')
+const loginRouter = require('./controller/login')
+const { unknownEndpoint, errorHandler, tokenExtractor, userExtractor } = require('./utils/middleware')
 
 const app = express()
 
-// mongoose.connect(MONGODB_URI)
-
 app.use(cors())
 app.use(express.json())
-app.use(morgan('tiny'))
+if (process.env.NODE_ENV !== 'test') {
+  app.use(morgan('tiny'))
+}
+app.use(tokenExtractor)
 
-app.use('/api/blogs', blogRouter)
+app.use('/api/blogs', userExtractor, blogRouter)
 app.use('/api/users', userRouter)
+app.use('/api/login', loginRouter)
 
 app.use(unknownEndpoint)
 app.use(errorHandler)
