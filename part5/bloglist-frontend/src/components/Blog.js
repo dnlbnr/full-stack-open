@@ -30,15 +30,15 @@ function Blog({ blog, likeBlog, deleteBlog }) {
       {' '}
       {blog.author}
       {' '}
-      <button type="button" onClick={toggleDetails}>{detailsVisible ? 'Hide details' : 'Show details'}</button>
+      <button className="toggleDetailsButton" type="button" onClick={toggleDetails}>{detailsVisible ? 'Hide details' : 'Show details'}</button>
       { detailsVisible && (
-      <div>
+      <div className="blogDetails">
         {blog.url}
         {' '}
         <br />
         {blog.likes}
         {' '}
-        {!liked && <button type="button" onClick={handleLike}>{liked ? 'Unlike' : 'Like'}</button>}
+        {!liked && <button className="likeButton" type="button" onClick={handleLike}>Like</button>}
         <br />
         <button type="button" onClick={handleDelete}>Delete Blog</button>
       </div>

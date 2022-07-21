@@ -1,5 +1,11 @@
 import PropTypes from 'prop-types';
 
+const userType = PropTypes.shape({
+  id: PropTypes.string.isRequired,
+  username: PropTypes.string.isRequired,
+  token: PropTypes.string.isRequired,
+});
+
 const blogType = PropTypes.shape({
   title: PropTypes.string.isRequired,
   author: PropTypes.string.isRequired,
@@ -8,17 +14,10 @@ const blogType = PropTypes.shape({
 });
 
 const blogsType = PropTypes.arrayOf(blogType);
-
-const userType = PropTypes.shape({
-  id: PropTypes.string.isRequired,
-  username: PropTypes.string.isRequired,
-  token: PropTypes.string.isRequired,
-});
-
 const likeBlogType = PropTypes.func;
-
 const deleteBlogType = PropTypes.func;
+const createNewBlogType = PropTypes.func;
 
 export {
-  userType, blogType, blogsType, likeBlogType, deleteBlogType,
+  userType, blogType, blogsType, likeBlogType, deleteBlogType, createNewBlogType,
 };

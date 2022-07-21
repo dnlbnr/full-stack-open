@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { createNewBlogType } from '../utils/propTypes';
 
 const initialValues = {
   title: '',
@@ -42,5 +43,9 @@ function NewBlog({ createNewBlog }) {
     </div>
   );
 }
+
+NewBlog.propTypes = {
+  createNewBlog: createNewBlogType.isRequired,
+};
 
 export default NewBlog;
