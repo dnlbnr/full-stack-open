@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { onSubmitType } from '../utils/propTypes';
 
 const initialFormValues = {
   username: '',
@@ -43,5 +44,9 @@ function LoginForm({ onSubmit }) {
     </div>
   );
 }
+
+LoginForm.propTypes = {
+  onSubmit: onSubmitType.isRequired,
+};
 
 export default LoginForm;

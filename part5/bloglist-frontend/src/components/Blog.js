@@ -3,7 +3,7 @@ import { blogType, likeBlogType, deleteBlogType } from '../utils/propTypes';
 
 function Blog({ blog, likeBlog, deleteBlog }) {
   const [detailsVisible, setDetailsVisible] = useState(false);
-  const [liked, setLiked] = useState(false);
+  // const [liked, setLiked] = useState(false);
 
   const blogStyle = {
     border: '1px solid black',
@@ -16,8 +16,8 @@ function Blog({ blog, likeBlog, deleteBlog }) {
   };
 
   const handleLike = async () => {
-    setLiked(true);
     await likeBlog(blog);
+    // setLiked(true);
   };
 
   const handleDelete = () => {
@@ -25,7 +25,7 @@ function Blog({ blog, likeBlog, deleteBlog }) {
   };
 
   return (
-    <div style={blogStyle}>
+    <div style={blogStyle} className="blog">
       {blog.title}
       {' '}
       {blog.author}
@@ -36,11 +36,13 @@ function Blog({ blog, likeBlog, deleteBlog }) {
         {blog.url}
         {' '}
         <br />
-        {blog.likes}
+        <span className="likes">{blog.likes}</span>
         {' '}
-        {!liked && <button className="likeButton" type="button" onClick={handleLike}>Like</button>}
+        {/* {!liked &&
+          <button className="likeButton" type="button" onClick={handleLike}>Like</button> */}
+        <button className="likeButton" type="button" onClick={handleLike}>Like</button>
         <br />
-        <button type="button" onClick={handleDelete}>Delete Blog</button>
+        <button className="deleteButton" type="button" onClick={handleDelete}>Delete Blog</button>
       </div>
       )}
     </div>

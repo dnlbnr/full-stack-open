@@ -17,7 +17,22 @@ const blogsType = PropTypes.arrayOf(blogType);
 const likeBlogType = PropTypes.func;
 const deleteBlogType = PropTypes.func;
 const createNewBlogType = PropTypes.func;
+const textType = PropTypes.string;
+
+const onSubmitType = PropTypes.func;
+
+const childrenType = PropTypes.oneOfType([
+  PropTypes.arrayOf(PropTypes.node),
+  PropTypes.node]);
 
 export {
-  userType, blogType, blogsType, likeBlogType, deleteBlogType, createNewBlogType,
+  userType,
+  blogType,
+  blogsType,
+  likeBlogType,
+  deleteBlogType,
+  createNewBlogType,
+  onSubmitType,
+  textType,
+  childrenType,
 };

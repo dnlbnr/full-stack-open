@@ -1,4 +1,5 @@
 import { forwardRef, useState, useImperativeHandle } from 'react';
+import { textType, childrenType } from '../utils/propTypes';
 
 const Collapsible = forwardRef((props, ref) => {
   const { text } = props;
@@ -12,10 +13,15 @@ const Collapsible = forwardRef((props, ref) => {
 
   return (
     <div>
-      <div><button type="button" onClick={toggleVisible}>{visible ? `collapse ${text}` : text}</button></div>
+      <div><button className="toggleButton" type="button" onClick={toggleVisible}>{visible ? `collapse ${text}` : text}</button></div>
       <div>{visible && props.children}</div>
     </div>
   );
 });
+
+Collapsible.propTypes = {
+  text: textType.isRequired,
+  children: childrenType.isRequired,
+};
 
 export default Collapsible;

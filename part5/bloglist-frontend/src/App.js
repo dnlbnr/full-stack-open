@@ -50,12 +50,14 @@ function App() {
       const sortedByLikes = blogsFromBackend.sort((a, b) => a.likes < b.likes);
       setBlogs(sortedByLikes);
     };
-    try {
-      getBlogs();
-    } catch (error) {
-      showNotification.error('Something went wrong while receiving the blogs');
+    if (user) {
+      try {
+        getBlogs();
+      } catch (error) {
+        showNotification.error('Something went wrong while receiving the blogs');
+      }
     }
-  }, []);
+  }, [user]);
 
   const handleLogin = async (formValues) => {
     const { username, password } = formValues;

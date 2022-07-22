@@ -3,6 +3,7 @@ module.exports = {
     browser: true,
     es2021: true,
     jest: true,
+    'cypress/globals': true,
   },
   extends: [
     'plugin:react/recommended',
@@ -18,6 +19,7 @@ module.exports = {
   },
   plugins: [
     'react',
+    'cypress',
     // '@typescript-eslint',
   ],
   rules: {
@@ -25,5 +27,6 @@ module.exports = {
     'react/jsx-filename-extension': 0,
     // 'consistent-return': 0,
     'no-alert': 0,
+    radix: 0,
   },
 };

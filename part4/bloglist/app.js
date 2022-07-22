@@ -5,6 +5,7 @@ const morgan = require('morgan')
 const blogRouter = require('./controller/blogs')
 const userRouter = require('./controller/users')
 const loginRouter = require('./controller/login')
+const dbRouter = require('./controller/db')
 const { unknownEndpoint, errorHandler, tokenExtractor, userExtractor } = require('./utils/middleware')
 
 const app = express()
@@ -16,6 +17,7 @@ if (process.env.NODE_ENV !== 'test') {
 }
 app.use(tokenExtractor)
 
+if (process.env.NODE_ENV === 'test') app.use('/api/testing/reset', dbRouter)
 app.use('/api/blogs', userExtractor, blogRouter)
 app.use('/api/users', userRouter)
 app.use('/api/login', loginRouter)
