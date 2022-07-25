@@ -52,8 +52,13 @@
     },
     {
       "content": "123",
-      "votes": 1,
+      "votes": 3,
       "id": "yqgawZX"
+    },
+    {
+      "content": "123",
+      "votes": 0,
+      "id": "dhRB9Ky"
     }
   ]
 }
