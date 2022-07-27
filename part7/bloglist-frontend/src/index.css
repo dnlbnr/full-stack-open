@@ -1,0 +1,85 @@
+.notification {
+  border: 3px solid;
+  font-size: 16px;
+  text-align: center;
+}
+
+.success {
+  border-color: green;
+  background-color: lightgreen;
+}
+
+.error {
+  border-color: red;
+  background-color: lightcoral;
+}
+
+.container {
+  width: 100%;
+  margin: 0;
+}
+
+.navbar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 16px;
+  background-color: black;
+  color: white;
+  width: 100%;
+  padding: 16px;
+}
+
+.navbar__product {
+  font-size: 32px;
+  position: absolute;
+  left: 16px;
+}
+
+.navbar__links {
+  display: flex;
+  gap: 12px;
+  margin-left: 4px;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.navbar__user {
+  display: flex;
+  gap: 12px;
+  justify-content: end;
+  align-items: center;
+  margin-right: 4px;
+  font-size: 14px;
+}
+
+.navItem {
+  text-decoration: none;
+  color: orange;
+  padding: 4px 8px;
+}
+.navItem:hover {
+  color: darkgoldenrod;
+}
+
+button {
+  background-color: lightgray;
+  border: none;
+  border-radius: 0.375rem;
+  padding: 4px 8px;
+}
+button:hover {
+  background-color: darkgray;
+}
+button.primary {
+  border: 1px solid darkorange;
+  background-color: orange;
+}
+button.primary:hover {
+  background-color: darkorange;
+}
+
+.content-area {
+  width: 100%;
+  padding: 12px;
+}
