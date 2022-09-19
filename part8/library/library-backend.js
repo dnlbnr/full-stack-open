@@ -72,17 +72,15 @@ const resolvers = {
       if (!user) throw new AuthenticationError("not authed");
       return await Author.collection.countDocuments();
     },
-    allBooks: async (_, __, { user }) => {
+    allBooks: async (_, args, { user }) => {
       if (!user) throw new AuthenticationError("not authed");
-      return await Book.find({});
-      // const books = await Book.find({});
-      // const filteredByAuthor = args.author
-      //   ? books.filter((b) => b.author.name === args.author)
-      //   : books;
-      // const filteredByGenre = args.genre
-      //   ? filteredByAuthor.filter((b) => b.genres.includes(args.genre))
-      //   : filteredByAuthor;
-      // return filteredByGenre;
+      const { author, genre } = args;
+      const filterAuthor = author && { author };
+      const filterGenre = genre && { genres: genre };
+      return await Book.find({
+        ...filterAuthor,
+        ...filterGenre,
+      });
     },
     allAuthors: async (_, __, { user }) => {
       if (!user) throw new AuthenticationError("not authed");
