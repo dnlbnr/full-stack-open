@@ -1,7 +1,7 @@
-export type Diagnose = {
+export type Diagnosis = {
   code: string;
   name: string;
   latin?: string;
 };
 
-export type Diagnoses = Diagnose[];
+export type Diagnoses = Diagnosis[];
